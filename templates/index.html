@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/indexstyle.css')}}">
+    <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+    <title>Meltcurve Interpreter</title>
+    
+</head>
+<body>
+    <div class="box">
+        <div class="container">
+    
+            <div class="top">
+    
+                <header>CT File Uplaod</header>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="input-field">
+                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text">
+                    <br>
+                    <input type="file" id="file" accept=".xlsx, .xls" name="file">
+                </div>
+                <br>
+                <div class="input-field">
+                    <input type="submit" class="submit" value="Submit" id="">
+                </div>
+            </form>
+            <br>
+            <br>
+            <div class="about">
+                <span>{{ status }}</span>
+            </div>
+        </div>
+
+
+
+        <div class="container1">
+    
+            <div class="top1">
+    
+                <header>MELT File Uplaod</header>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="input-field1">
+                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text">
+                    <br>
+                    <input type="file" id="file" accept=".xlsx, .xls" name="file">
+                </div>
+                <br>
+                <div class="input-field1">
+                    <input type="submit" class="submit" value="Submit" id="">
+                </div>
+            </form>
+            <br>
+            <br>
+            <div class="about1">
+                <span>{{ status }}</span>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a href="#" class="logo">
+                    <img src="{{url_for('static',filename = 'Images/icon.ico')}}" alt="">
+                    <span class="nav-item">Meltcurve <br> &nbsp;&nbsp;Interpreter</span>
+                </a>
+            </li>
+            <li><a href="home.html">
+                <i class="fas fa-home"></i>
+                <span class="nav-item">Home</span>
+            </a></li>
+            <li><a href="#">
+                <i class="fas fa-user"></i>
+                <span class="nav-item">Profile</span>
+            </a></li>
+            <li><a href="#">
+                <i class="fas fa-wallet"></i>
+                <span class="nav-item">Wallet</span>
+            </a></li>
+            <li><a href="#">
+                <i class="fas fa-chart-bar"></i>
+                <span class="nav-item">Analytics</span>
+            </a></li>
+            <li><a href="#">
+                <i class="fas fa-tasks"></i>
+                <span class="nav-item">Task</span>
+            </a></li>
+            <li><a href="#">
+                <i class="fas fa-cog"></i>
+                <span class="nav-item">Settings</span>
+            </a></li>
+            <li><a href="#">
+                <i class="fas fa-question-circle"></i>
+                <span class="nav-item">help</span>
+            </a></li>
+            <li><a href="#" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Logout</span>
+            </a></li>
+        </ul>
+    </nav>
+
+
+
+
+
+    
+</body>
+</html>
