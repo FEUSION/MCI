@@ -10,14 +10,38 @@ body{
     width: 100%;
     overflow: hidden;
 }
-.textbox h1{
+.textbox span {
     font-size: 65px;
-    font-family: "Poppins",sans-serif;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
     padding-bottom: 30px;
+    padding-right: 150px;
+    color: #36e4f4;
+    overflow: hidden;
+    animation: typing 2s, cursor .4s step-end infinite alternate;
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  @keyframes cursor {
+    from {
+      border-right-color: #36e4f4;
+    }
+    to {
+      border-right-color: transparent;
+    }
+  }
+  
 
-}
-.textbox p{
-    margin: 10px 0 40px;
+.textbox{
+    margin-top: 0px;
     font-size: 14px;
     color: #fff;
 }
@@ -31,7 +55,9 @@ body{
     font-size: 13px;
     position: relative;
     cursor: pointer;
-    width:15%;
+    width:10%;
+    margin-right:150px;
+    margin-top:25px;
 }
 .hero-btn:hover{
     border: #36e4f4;
@@ -39,6 +65,7 @@ body{
     transition: 1s;
 
 }
+
 .textbox{
     width: 100%;
     color: #fff;

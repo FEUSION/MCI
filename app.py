@@ -133,6 +133,23 @@ def Melt():
     else:
         return render_template("Melt.html")
 
+@app.route("/CT.html", methods=['POST', 'GET'])
+def CT():
+
+    if request.method == 'POST':
+
+        username = request.form.getlist("input-text1")[0]
+        token = request.form.getlist("input-text1")[1]
+        file_name = username + ' ' + token + '.xlsx'
+        file_path = os.path.join('static\\uploaded_files\\CT', file_name).replace('/', '\\')
+        data = obj.data_read(path=file_path, index=True)
+        fig = obj.plot(data=data, save=True)
+        plot_html = plot(fig, output_type='div')
+
+        return render_template("CT.html", plot_html=plot_html)
+    else:
+        return render_template("CT.html")
+
     # return render_template("Melt.html")
 if __name__ == "__main__":
     app.run(debug=True)
