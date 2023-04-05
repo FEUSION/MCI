@@ -11,22 +11,35 @@
 
 </head>
 <body>
+
+    {% if message %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endif %}
+    {% with success_message = get_flashed_messages()[0]%}
+    {% if success_message %}
+      <script>
+        alert('{{ success_message }}');
+      </script>
+    {% endif %}
+    {% endwith %}
     <div class="box">
         <div class="container">
     
             <div class="top">
     
-                <header>CT File Uplaod</header>
+                <header>Melt File Uplaod</header>
             </div>
-            <form method="POST" enctype="multipart/form-data">
+            <form action="{{url_for('Melt_file_upload')}}" method="POST" enctype="multipart/form-data">
                 <div class="input-field">
-                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text">
+                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text" required>
                     <br>
                     <input type="file" id="file" accept=".xlsx, .xls" name="file">
                 </div>
                 <br>
                 <div class="input-field">
-                    <input type="submit" class="submit" value="Submit" id="">
+                    <button type="submit" class="submit">Submit</button>
                 </div>
             </form>
             <br>
@@ -42,17 +55,17 @@
     
             <div class="top1">
     
-                <header>MELT File Uplaod</header>
+                <header>CT File Uplaod</header>
             </div>
-            <form method="POST" enctype="multipart/form-data">
+            <form action="{{url_for('Ct_file_upload')}}" method="POST" enctype="multipart/form-data">
                 <div class="input-field1">
-                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text">
+                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text" required>
                     <br>
                     <input type="file" id="file" accept=".xlsx, .xls" name="file">
                 </div>
                 <br>
                 <div class="input-field1">
-                    <input type="submit" class="submit" value="Submit" id="">
+                    <button type="submit" class="submit">Submit</button>
                 </div>
             </form>
             <br>
