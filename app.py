@@ -5,6 +5,11 @@ import xlrd
 import xlwt
 import openpyxl
 import os
+import secrets
+
+def genrate_token():
+    token=secrets.token_hex(2)
+    return token
 
 
 def abspathgen(path: str):
@@ -53,16 +58,19 @@ def Melt_file_upload():
         print(type(username))
         file = request.files.get('file')
         file_data = file.read()
+        print(file.filename)
         if file.filename.endswith('.xlsx') or file.filename.endswith('.xls') and 'Melt' in file.filename:
             try:
                 data = pd.read_excel(io.BytesIO(file_data), engine='xlrd')
             except:
                 data = pd.read_excel(io.BytesIO(file_data))
-            filepath = os.path.join(app.config["UPLOAD_FOLDER1"],username+' '+file.filename).replace('/', '\\')
+            gen_token = genrate_token()
+            gen_token_path = str(gen_token)+'.xlsx'
+            filepath = os.path.join(app.config["UPLOAD_FOLDER1"],username+' '+gen_token_path).replace('/', '\\')
             data.to_excel(filepath)
             del file
             # return render_template("index.html", success_message='File Uplaoded Successfully!')
-            flash('File Uplaoded Successfully!')
+            flash(f'File Uplaoded Successfully! Your Token : {gen_token}')
             return redirect(url_for('Melt_file_upload'))
         else:
             if not file.filename.endswith('.xlsx') and not file.filename.endswith('.xls'):
@@ -86,11 +94,13 @@ def Ct_file_upload():
                 data = pd.read_excel(io.BytesIO(file_data), engine='xlrd')
             except:
                 data = pd.read_excel(io.BytesIO(file_data))
-            filepath = os.path.join(app.config["UPLOAD_FOLDER2"],username+' '+file.filename).replace('/', '\\')
+            gen_token = genrate_token()
+            gen_token_path = str(gen_token)+'.xlsx'
+            filepath = os.path.join(app.config["UPLOAD_FOLDER2"],username+' '+gen_token_path).replace('/', '\\')
             data.to_excel(filepath)
             del file
             # return render_template("index.html", success_message='File Uplaoded Successfully!')
-            flash('File Uplaoded Successfully!')
+            flash(f'File Uplaoded Successfully! Your Token : {gen_token}')
             return redirect(url_for('Ct_file_upload'))
         else:
             if not file.filename.endswith('.xlsx') and not file.filename.endswith('.xls'):
@@ -101,7 +111,9 @@ def Ct_file_upload():
                 return render_template("index.html", message='No file selected')
     return render_template("index.html")
 
-
+@app.route("/Melt.html")
+def Melt():
+    return render_template("Melt.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
