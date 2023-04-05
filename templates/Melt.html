@@ -4,15 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/indexstyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/meltstyle.css')}}">
     <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Meltcurve Interpreter</title>
 
 </head>
 <body>
+<form action="{{url_for('Melt')}}" method="POST" enctype="multipart/form-data">
+<input type="text" class="user-input" placeholder="Your Username" name ="input-text" id="input-text" required>
+<input type="text" class="token-input" placeholder="Your Token" name ="input-text" id="input-text" required>
+<button type="submit" class="Load">Load</button>
+</form>
+<div class="box">
 
-    <nav>
+    <div id="myPlot"></div>
+    <script>
+    var plotDiv = {{plot_html|safe }}
+    </script>
+</div>
+
+<nav>
         <ul>
             <li>
                 <a href="#" class="logo">
@@ -62,10 +74,6 @@
             </a></li>
         </ul>
     </nav>
-
-
-
-
 
 
 </body>

@@ -6,6 +6,11 @@ import xlwt
 import openpyxl
 import os
 import secrets
+import plotly.graph_objs as go
+from plotly.offline import plot
+import LocalMeltcurveAnalysis.meltcurve_interpreter as mlt
+obj = mlt.MeltcurveInterpreter()
+
 
 def genrate_token():
     token=secrets.token_hex(2)
@@ -111,9 +116,23 @@ def Ct_file_upload():
                 return render_template("index.html", message='No file selected')
     return render_template("index.html")
 
-@app.route("/Melt.html")
+@app.route("/Melt.html", methods=['POST','GET'])
 def Melt():
-    return render_template("Melt.html")
 
+    if request.method == 'POST':
+
+        username = request.form.getlist("input-text")[0]
+        token = request.form.getlist("input-text")[1]
+        file_name = username+' '+token+'.xlsx'
+        file_path = os.path.join('static\\uploaded_files\\Melt',file_name).replace('/','\\')
+        data = obj.data_read(path = file_path, index=True)
+        fig = obj.plot(data=data, save=True)
+        plot_html = plot(fig, output_type='div')
+
+        return render_template("Melt.html", plot_html = plot_html)
+    else:
+        return render_template("Melt.html")
+
+    # return render_template("Melt.html")
 if __name__ == "__main__":
     app.run(debug=True)
