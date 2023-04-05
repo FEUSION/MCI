@@ -11,6 +11,7 @@
 body{
     /*background: #dfe9f5;*/
     background-image: url('/static/Images/bg1.png');
+    background-repeat: no-repeat;
 }
 nav{
     position:absolute;
@@ -162,8 +163,10 @@ header{
 }
 
 #file::-webkit-file-upload-button{
-    visibility: hidden;
+    /*visibility: hidden;*/
+    display:none;
     align-items: center;
+
 }
 
 #file, input[type="button"], #Color{
@@ -181,6 +184,9 @@ header{
 
 #file{
     padding-top: 5px;
+    padding-left:10px;
+    padding-bottom:5px;
+
 }
 #file:hover, input[type="button"], #Color{
     background-color: rgb(0, 255, 255);
