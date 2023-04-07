@@ -56,6 +56,7 @@ def index():
 
 @app.route("/Melt_file_upload", methods=['POST', 'GET'])
 def Melt_file_upload():
+
     if request.method == 'POST':
 
         username = request.form.getlist("input-text")[0]
@@ -161,5 +162,24 @@ def help():
 def homepage():
     return render_template("homepage.html")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
+@app.route("/analytics.html", methods = ['GET','POST'])
+def analytics():
+    if 'loaded' not in session:
+        session['loaded'] = True
+
+    if request.method == 'POST':
+        obj2 = mlt.MeltcurveInterpreter()
+        username = request.form.getlist("input-text3")[0]
+        token = request.form.getlist("input-text3")[1]
+        file_name = username + ' ' + token + '.xlsx'
+        file_path = os.path.join('static\\uploaded_files\\Melt', file_name).replace('/', '\\')
+        data = obj2.data_read(path=file_path, index=True)
+        dataframe = obj2.feature_detection(return_values=True)
+        table = dataframe.to_html(classes="table", header="true")
+
+        return render_template("analytics.html", table=table)
+    else:
+        return render_template("analytics.html")
+
+app.run(debug=True, threaded= True)

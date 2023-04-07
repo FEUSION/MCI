@@ -201,6 +201,8 @@ class MeltcurveInterpreter:
             return processed_data
 
     def feature_detection(self,download=False, return_values = False):
+        global first_highest_peak_att
+        global second_highest_peak_att
         data = self.transformed_data
         c1 = ['Tm1', 'Tstart1', 'Tend1', 'Prom1', 'Width1', 'AUC1', 'Tm2', 'Tstart2', 'Tend2', 'Prom2',
               'Width2', 'AUC2', 'Target']
@@ -266,32 +268,39 @@ class MeltcurveInterpreter:
                     features_data.loc[k, c1[5:]] = [0.0 for _ in range(len(c1[5:]))]
 
             if prediction == 2:
-                if len(first_highest_peak_att) == 0:
-                    features_data.loc[k, c1] = [0.0 for _ in range(len(c1))]
-
-                else:
-                    width, prominence, start, end = *first_highest_peak_att,
-                    width1, prominence1, start1, end1 = *second_highest_peak_att,
-
-                    if prominence1 < prominence * 0.40:
-                        print('Second Promince is low')
-                        start = x[round(start)]
-                        end = x[round(end)]
-                        features_data.loc[k, c1[:5]] = [peak_tempeartures[0], start, end, prominence, width]
-                        features_data.loc[k, c1[5:]] = [0.0 for _ in range(len(c1[5:]))]
+                try:
+                    if len(first_highest_peak_att) == 0:
+                        features_data.loc[k, c1] = [0.0 for _ in range(len(c1))]
 
                     else:
-                        start = x[round(start)]
-                        end = x[round(end)] 
-                        start1 = x[round(start1)]
-                        end1 = x[round(end1)]
-                        try:
-                            features_data.loc[k, c1[:5]] = [peak_tempeartures[0], start, end, prominence, width]
-                            features_data.loc[k, c1[6:11]] = [peak_tempeartures[1], start1, end1, prominence1, width1]
-                            features_data.loc[k, c1[11:]] = [0.0 for _ in range(len(c1[11:]))]
-                        except:
+                        width, prominence, start, end = *first_highest_peak_att,
+                        width1, prominence1, start1, end1 = *second_highest_peak_att,
+
+                        if prominence1 < prominence * 0.40:
+                            print('Second Promince is low')
+                            start = x[round(start)]
+                            end = x[round(end)]
                             features_data.loc[k, c1[:5]] = [peak_tempeartures[0], start, end, prominence, width]
                             features_data.loc[k, c1[5:]] = [0.0 for _ in range(len(c1[5:]))]
+
+                        else:
+                            start = x[round(start)]
+                            end = x[round(end)] 
+                            start1 = x[round(start1)]
+                            end1 = x[round(end1)]
+                            try:
+                                features_data.loc[k, c1[:5]] = [peak_tempeartures[0], start, end, prominence, width]
+                                features_data.loc[k, c1[6:11]] = [peak_tempeartures[1], start1, end1, prominence1, width1]
+                                features_data.loc[k, c1[11:]] = [0.0 for _ in range(len(c1[11:]))]
+                            except:
+                                features_data.loc[k, c1[:5]] = [peak_tempeartures[0], start, end, prominence, width]
+                                features_data.loc[k, c1[5:]] = [0.0 for _ in range(len(c1[5:]))]
+                except:
+                    width, prominence, start, end = *first_highest_peak_att,
+                    start = x[round(start)]
+                    end = x[round(end)]
+                    features_data.loc[k, c1[:5]] = [peak_tempeartures[0], start, end, prominence, width]
+                    features_data.loc[k, c1[5:]] = [0.0 for _ in range(len(c1[5:]))]
 
 
             temp_range = data.iloc[:, 0]
@@ -332,33 +341,48 @@ class MeltcurveInterpreter:
         if return_values:
             return features_data
 
-
     def report(self):
         dataa = self.signal_processing_data.copy()
         for cols in dataa.columns[:-1]:
             dataa[cols] = dataa[cols].apply(lambda x: round(x, 2))
 
-        data_len = self.transformed_data.shape[1]-1
+        data_len = self.transformed_data.shape[1] - 1
         rows = int(np.ceil(np.sqrt(data_len)))
-        cols = int(np.ceil(data_len/rows))
-
+        cols = int(np.ceil(data_len / rows))
 
         red_count = 0
         green_count = 0
         # plt.style.use('ggplot')
-        figure, axs = plt.subplots(ncols=cols, nrows=rows)
-        for i, axs in enumerate(axs.flatten()):
+
+        try:
+            figure, axs = plt.subplots(ncols=cols, nrows=rows)
+            for i, axs in enumerate(axs.flatten()):
+                if i < data_len:
+                    if self.signal_processing_data.loc[i + 1][0] == 0.0:
+                        colour = 'red'
+                        red_count += 1
+                    else:
+                        colour = 'green'
+                        green_count += 1
+                    axs.plot(self.transformed_data.iloc[:, 0], self.transformed_data.iloc[:, i + 1], color=colour)
+                    axs.set_title(f'{self.labels[i]}', fontsize=10)
+                else:
+                    figure.delaxes(axs)
+        except:
+            figure, axs = plt.subplots()
+            i = 0
             if i < data_len:
-                if self.signal_processing_data.loc[i+1][0] == 0.0:
+                if self.signal_processing_data.loc[i + 1][0] == 0.0:
                     colour = 'red'
-                    red_count+=1
+                    red_count += 1
                 else:
                     colour = 'green'
-                    green_count+=1  
-                axs.plot(self.transformed_data.iloc[:,0],self.transformed_data.iloc[:,i+1],color = colour)
-                axs.set_title(f'{self.labels[i]}', fontsize =10)
+                    green_count += 1
+                axs.plot(self.transformed_data.iloc[:, 0], self.transformed_data.iloc[:, i + 1], color=colour)
+                axs.set_title(f'{self.labels[i]}', fontsize=10)
             else:
                 figure.delaxes(axs)
+
         figure.tight_layout()
         canvas2 = FigureCanvas(figure)
         png_output2 = io.BytesIO()
@@ -371,12 +395,12 @@ class MeltcurveInterpreter:
         plt.close()
         plt.clf()
 
-        main_fig2,ax  = plt.subplots(figsize = (10,5))
+        main_fig2, ax = plt.subplots(figsize=(10, 5))
         for cols in self.transformed_data.columns[1:]:
-            ax.plot(self.transformed_data.iloc[:,0], self.transformed_data[cols])
+            ax.plot(self.transformed_data.iloc[:, 0], self.transformed_data[cols])
         plt.xlabel('Temperature °C')
         plt.ylabel('dF/dT')
-        plt.legend(labels = self.labels,loc='center left', bbox_to_anchor=(1, 0.5))
+        plt.legend(labels=self.labels, loc='center left', bbox_to_anchor=(1, 0.5))
         canvas4 = FigureCanvas(main_fig2)
         png_output4 = io.BytesIO()
         canvas4.print_png(png_output4)
@@ -388,15 +412,15 @@ class MeltcurveInterpreter:
         plt.close()
         plt.clf()
 
-        main_fig,ax  = plt.subplots(figsize = (10,5))
-        for cols,rows in zip(range(1, len(self.transformed_data.columns)), self.signal_processing_data.iterrows()):
+        main_fig, ax = plt.subplots(figsize=(10, 5))
+        for cols, rows in zip(range(1, len(self.transformed_data.columns)), self.signal_processing_data.iterrows()):
             if rows[1][0] == 0.0:
                 color2 = 'red'
                 label2 = 'Negative'
             else:
                 color2 = 'green'
                 label2 = 'Postive'
-            ax.plot(self.transformed_data.iloc[:,0], self.transformed_data.iloc[:,cols], color = color2)
+            ax.plot(self.transformed_data.iloc[:, 0], self.transformed_data.iloc[:, cols], color=color2)
         colors = {'negative': 'red', 'positive': 'green'}
         ax.plot([], [], color=colors['negative'], label='Negative')
         ax.plot([], [], color=colors['positive'], label='Positive')
@@ -413,7 +437,6 @@ class MeltcurveInterpreter:
             temp_image_file2 = f.name
         plt.close()
         plt.clf()
-
 
         class PDF(FPDF):
             def __init__(self):
@@ -440,10 +463,10 @@ class MeltcurveInterpreter:
         pdf.ln(5)
         pdf.set_font('Arial', '', 14)
         pdf.cell(w=0, h=15, txt="Melt signal Plot", ln=1)
-        pdf.image(temp_image_file3, x=1, y= None, w = 200, h = 100, type='PNG') 
+        pdf.image(temp_image_file3, x=1, y=None, w=200, h=100, type='PNG')
         pdf.set_font('Arial', '', 14)
         pdf.cell(w=0, h=15, txt="After Threshold", ln=1)
-        pdf.image(temp_image_file2, x=1, y= None, w = 200, h = 100, type='PNG')  
+        pdf.image(temp_image_file2, x=1, y=None, w=200, h=100, type='PNG')
         pdf.set_font('Arial', '', 14)
         pdf.cell(w=0, h=15, txt="Sample wise Melt signal Plots", ln=1)
         pdf.image(temp_image_file, x=1, y=None, w=200, h=150, type='PNG', link='')
@@ -458,9 +481,9 @@ class MeltcurveInterpreter:
         for index, row in dataa.iterrows():
             pdf.ln(8)
             if row['Tm1'] == 0.0:
-                pdf.set_text_color(r= 255, g= 0, b = 0)
+                pdf.set_text_color(r=255, g=0, b=0)
             else:
-                pdf.set_text_color(r= 0, g= 128, b = 0) 
+                pdf.set_text_color(r=0, g=128, b=0)
             pdf.cell(15, 8, str(row['Tm1']), 1)
             pdf.cell(15, 8, str(row['Tstart1']), 1)
             pdf.cell(15, 8, str(row['Tend1']), 1)
@@ -477,4 +500,3 @@ class MeltcurveInterpreter:
         saving_path2 = self.save_path()
         pdf.output(saving_path2, 'F')
         os.remove(temp_image_file)
-

@@ -1,0 +1,335 @@
+@import url("http://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+*{
+    margin:0;
+    padding:0;
+    outline:none;
+    border:none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body{
+    /*background: #dfe9f5;*/
+    background-image: url('/static/Images/bg1.png');
+    background-repeat: no-repeat;
+}
+nav{
+    position:absolute;
+    top:0;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    background: transparent
+    background-color:rgba(255, 255, 255, 0.4);
+    /*backdrop-filter: blur(90px);*/
+    width: 90px;
+    overflow: hidden;
+    transition: width 0.2s linear;
+    box-shadow: 0 20px 30px rgba(0,0,0,0);
+
+}
+
+.logo{
+    text-align: center;
+    display: flex;
+    transition: all 0.5s ease;
+    margin: 10px 0 0 10px;
+}
+
+.logo img{
+    width: 45px;
+    height: 45px;
+    margin-top:12px;
+    margin-left:5px;
+    border-radius: 15%;
+}
+.logo span{
+    font-weight:bold ;
+    padding-bottom:20px;
+    padding-left: 7px;
+    font-size: 15px;
+    /*text-transform: uppercase;*/
+}
+
+a{
+    position: relative;
+    color: #fff;
+    font-size: 14px;
+    display: table;
+    width: 300px;
+    padding: 10px;
+}
+
+.fas{
+    position: relative;
+    width: 70px;
+    height: 40px;
+    top: 14px;
+    font-size: 20px;
+    text-align: center;
+
+}
+.nav-item{
+    position: relative;
+    top: 12px;
+    margin-left: 10px;
+
+}
+a:hover{
+    /*background-color: rgba(255, 255, 255, 0.4);*/
+    color:#36e4f4;
+
+}
+
+nav:hover{
+    width: 250px;
+    transition: all 0.5s ease;
+
+}
+
+.logout{
+    position: absolute;
+    bottom: 0;
+
+}
+
+.box{
+    display: flex;
+    background: transparent;
+    background-color:rgb(47, 127, 161,0.2);
+    backdrop-filter: blur(80px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* position:relative; */
+    width: 1250px;
+    height: 400px;
+    justify-content: top;
+    align-items:stretch;
+    margin-left: 200px;
+    margin-top: 16px;
+    min-height: 90vh;
+    /* align-self: center; */
+    border-radius: 20px;
+    overflow:scroll;
+
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  color:rgb(255, 255, 255);
+  font-size:medium;
+}
+
+.table thead th {
+  background-color: #003fd2;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.table tbody td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+}
+.container{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 0 15px;
+
+}
+header{
+    color:azure;
+    font-size: 35px;
+    justify-content: center;
+    display: flex;
+    padding: 15px 0 15px 0;
+    margin-bottom: 20px;
+}
+
+.user-input{
+    height: 40px;
+    width: 15%;
+    border: none;
+    outline:none;
+    border-radius: 30px;
+    color:azure;
+    padding: 0 10px 0px 10px;
+    margin-left:250px;
+    margin-top:10px;
+    background: rgba(255, 255, 255, 0.4);
+}
+.token-input{
+    height: 40px;
+    width: 10%;
+    border: none;
+    outline:none;
+    border-radius: 30px;
+    color:azure;
+    padding: 0 10px 0px 10px;
+    margin-left:10px;
+    margin-top:10px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.input-field{
+    display: flex;
+    flex-direction: column;
+}
+::-webkit-input-placeholder{
+    color:azure;
+
+}
+.Load{
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    height: 40px;
+    outline: none;
+    width: 10%;
+    cursor: pointer;
+    transition: .3s;
+    margin-left:10px;
+}
+.Load:hover{
+    background: rgb(0, 255, 255);
+    color:azure;
+}
+
+#file::-webkit-file-upload-button{
+    /*visibility: hidden;*/
+    display:none;
+    align-items: center;
+
+}
+
+#file, input[type="button"], #Color{
+    border: 2px;
+    border-radius: 30px;
+    font-size: 15px;
+    height: 30px;
+    outline: 1px;
+    width: 100%;
+    transition: .3s;
+    background-color: rgb(255, 255, 255);
+    color:black;
+    text-align: center;
+}
+
+#file{
+    padding-top: 5px;
+    padding-left:10px;
+    padding-bottom:5px;
+
+}
+#file:hover, input[type="button"], #Color{
+    background-color: rgb(0, 255, 255);
+    color:azure;
+}
+.about{
+
+    font-family: "Popins",sans-serif;
+    color:azure;
+    text-align: center;
+    font-size: 10px;
+}
+
+
+
+.container1{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 0 15px;
+    margin-left: 200px;
+
+
+}
+header{
+    color:azure;
+    font-size: 35px;
+    justify-content: center;
+    display: flex;
+    padding: 15px 0 15px 0;
+    margin-bottom: 20px;
+}
+
+.input1{
+    height: 45px;
+    width: 100%;
+    border: none;
+    outline:none;
+    border-radius: 30px;
+    color:azure;
+    padding: 0 10px 0px 10px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.input-field1{
+    display: flex;
+    flex-direction: column;
+}
+::-webkit-input-placeholder{
+    color:azure;
+
+}
+.submit{
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    height: 30px;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+    transition: .3s;
+}
+.submit:hover{
+    background: rgb(0, 255, 255);
+    color:azure;
+}
+
+#file::-webkit-file-upload-button{
+    visibility: hidden;
+    align-items: center;
+}
+
+#file, input[type="button"], #Color{
+    border: 2px;
+    border-radius: 30px;
+    font-size: 15px;
+    height: 30px;
+    outline: 1px;
+    width: 100%;
+    transition: .3s;
+    background-color: rgb(255, 255, 255);
+    color:black;
+    text-align: center;
+}
+
+#file{
+    padding-top: 5px;
+}
+#file:hover, input[type="button"], #Color{
+    background-color: rgb(0, 255, 255);
+    color:azure;
+}
+.about1{
+
+    font-family: "Popins",sans-serif;
+    color:azure;
+    text-align: center;
+    font-size: 10px;
+}
+.myPlot{
+    border-radius:30px;
+}
+
+.title-header{
+
+    font-size:30px;
+    color:azure;
+    padding: 0px 10px 0px 10px;
+    margin-left:220px;
+    margin-top:10px;
+
+}

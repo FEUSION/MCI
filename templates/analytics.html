@@ -4,78 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/indexstyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/analytics.css')}}">
     <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Meltcurve Interpreter</title>
 
 </head>
 <body>
-
-    {% if message %}
-    <script>
-        alert('{{ message }}');
-    </script>
-    {% endif %}
-    {% with success_message = get_flashed_messages()[0]%}
-    {% if success_message %}
-      <script>
-        alert('{{ success_message }}');
-      </script>
-    {% endif %}
-    {% endwith %}
-    <div class="box">
-        <div class="container">
-    
-            <div class="top">
-    
-                <header>Melt File Uplaod</header>
-            </div>
-            <form action="{{url_for('Melt_file_upload')}}" method="POST" enctype="multipart/form-data">
-                <div class="input-field">
-                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text" required>
-                    <br>
-                    <input type="file" id="file" accept=".xlsx, .xls" name="file">
-                </div>
-                <br>
-                <div class="input-field">
-                    <button type="submit" class="submit">Submit</button>
-                </div>
-            </form>
-            <br>
-            <br>
-            <div class="about">
-                <span>{{ status }}</span>
-            </div>
-        </div>
-
-
-
-        <div class="container1">
-    
-            <div class="top1">
-    
-                <header>CT File Uplaod</header>
-            </div>
-            <form action="{{url_for('Ct_file_upload')}}" method="POST" enctype="multipart/form-data">
-                <div class="input-field1">
-                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text" required>
-                    <br>
-                    <input type="file" id="file" accept=".xlsx, .xls" name="file">
-                </div>
-                <br>
-                <div class="input-field1">
-                    <button type="submit" class="submit">Submit</button>
-                </div>
-            </form>
-            <br>
-            <br>
-            <div class="about1">
-                <span>{{ status }}</span>
-            </div>
-        </div>
+<form action="{{url_for('analytics')}}" method="POST" enctype="multipart/form-data"><span class="title-header">Feature Detection Panel    </span>
+<input type="text" class="user-input" placeholder="Your Username" name ="input-text3" id="input-text" required>
+<input type="text" class="token-input" placeholder="Your Token" name ="input-text3" id="input-text" required>
+<button type="submit" class="Load">Load</button>
+</form>
+<div class="box">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            {{ table|safe }}
+        </table>
     </div>
-    <nav>
+</div>
+
+<nav>
         <ul>
             <li>
                 <a href="#" class="logo">
@@ -107,7 +56,7 @@
                 <i class="fas fa-chart-pie"></i>
                 <span class="nav-item">Visualize</span>
             </a></li>
-            <li><a href="analytics.html">
+            <li><a href="#">
                 <i class="fas fa-chart-bar"></i>
                 <span class="nav-item">Analytics</span>
             </a></li>
@@ -127,9 +76,5 @@
     </nav>
 
 
-
-
-
-    
 </body>
 </html>
