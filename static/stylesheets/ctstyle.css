@@ -304,3 +304,13 @@ header{
 .myPlot{
     border-radius:30px;
 }
+
+.title-header{
+
+    font-size:30px;
+    color:azure;
+    padding: 0px 10px 0px 10px;
+    margin-left:220px;
+    margin-top:10px;
+
+}

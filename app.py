@@ -64,7 +64,7 @@ def Melt_file_upload():
         file = request.files.get('file')
         file_data = file.read()
         print(file.filename)
-        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls') and 'Melt' in file.filename:
+        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls') and 'Melt Extracted' in file.filename:
             try:
                 data = pd.read_excel(io.BytesIO(file_data), engine='xlrd')
             except:
@@ -94,7 +94,7 @@ def Ct_file_upload():
         username = str(username)
         file = request.files.get('file')
         file_data = file.read()
-        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls') and 'CT' in file.filename:
+        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls') and 'CT Extracted' in file.filename:
             try:
                 data = pd.read_excel(io.BytesIO(file_data), engine='xlrd')
             except:
@@ -151,5 +151,15 @@ def CT():
         return render_template("CT.html")
 
     # return render_template("Melt.html")
+
+
+@app.route("/help.html")
+def help():
+    return render_template("help.html")
+
+@app.route("/homepage.html")
+def homepage():
+    return render_template("homepage.html")
+
 if __name__ == "__main__":
     app.run(debug=True)

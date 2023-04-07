@@ -1,81 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/indexstyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/homepage.css')}}">
     <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-IG8WryN1QaLrwpEgNc/m9XN9SG+hYVdbnivjrT1FQj8TIO+R7eHkRnFNb7yDfWmzlG7YKyR0z0CTcFLpOxDf3A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Meltcurve Interpreter</title>
 
 </head>
 <body>
 
-    {% if message %}
-    <script>
-        alert('{{ message }}');
-    </script>
-    {% endif %}
-    {% with success_message = get_flashed_messages()[0]%}
-    {% if success_message %}
-      <script>
-        alert('{{ success_message }}');
-      </script>
-    {% endif %}
-    {% endwith %}
+<header>
+      <h1 class="title">MLRS DEVELOPERS</h1>
+    </header>
+
     <div class="box">
-        <div class="container">
-    
-            <div class="top">
-    
-                <header>Melt File Uplaod</header>
-            </div>
-            <form action="{{url_for('Melt_file_upload')}}" method="POST" enctype="multipart/form-data">
-                <div class="input-field">
-                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text" required>
-                    <br>
-                    <input type="file" id="file" accept=".xlsx, .xls" name="file">
-                </div>
-                <br>
-                <div class="input-field">
-                    <button type="submit" class="submit">Submit</button>
-                </div>
-            </form>
-            <br>
-            <br>
-            <div class="about">
-                <span>{{ status }}</span>
-            </div>
-        </div>
 
 
-
-        <div class="container1">
-    
-            <div class="top1">
-    
-                <header>CT File Uplaod</header>
-            </div>
-            <form action="{{url_for('Ct_file_upload')}}" method="POST" enctype="multipart/form-data">
-                <div class="input-field1">
-                    <input type="text" class="input" placeholder="Your ID Number" name ="input-text" id="input-text" required>
-                    <br>
-                    <input type="file" id="file" accept=".xlsx, .xls" name="file">
-                </div>
-                <br>
-                <div class="input-field1">
-                    <button type="submit" class="submit">Submit</button>
-                </div>
-            </form>
-            <br>
-            <br>
-            <div class="about1">
-                <span>{{ status }}</span>
-            </div>
-        </div>
     </div>
-    <nav>
+
+
+
+
+<nav>
         <ul>
             <li>
                 <a href="#" class="logo">
@@ -83,7 +34,7 @@
                     <span class="nav-item">Meltcurve <br> &nbsp;&nbsp;Interpreter</span>
                 </a>
             </li>
-            <li><a href="homepage.html">
+            <li><a href="#">
                 <i class="fas fa-home"></i>
                 <span class="nav-item">Home</span>
             </a></li>
@@ -127,9 +78,5 @@
     </nav>
 
 
-
-
-
-    
 </body>
 </html>
