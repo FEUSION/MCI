@@ -11,10 +11,11 @@
 body{
     /*background: #dfe9f5;*/
     background-image: url('/static/Images/bg1.png');
+    background-size: cover;
     background-repeat: no-repeat;
 }
 nav{
-    position:absolute;
+    position:fixed;
     top:0;
     bottom: 0;
     height: 100%;
@@ -93,48 +94,6 @@ nav:hover{
 
 }
 
-.title{
-    font-size:50px;
-    color:#36e4f4;
-    padding: 0px 10px 0px 10px;
-    margin-left:200px;
-    margin-top:15px;
-    margin-bottom:0px;
-
-}
-
-.title-header2{
-    font-size:20px;
-    color:azure;
-    padding: 0px 10px 0px 10px;
-    margin-left:300px;
-    margin-top:30px;
-
-}
-
-
-.title-header{
-
-    font-size:30px;
-    color:azure;
-    padding: 0px 10px 0px 10px;
-    margin-left:300px;
-    margin-top:30px;
-
-}
-
-.github{
-    font-size:30px;
-    padding: 0px 10px 0px 10px;
-    margin-left:300px;
-    margin-top:30px;
-}
-
-.icon-container{
-  display: inline-block;
-  margin-right: 10px;
-}
-
 .box{
     display: flex;
     background: transparent;
@@ -142,13 +101,85 @@ nav:hover{
     backdrop-filter: blur(80px);
     border: 1px solid rgba(255, 255, 255, 0.4);
     /* position:relative; */
-    width: 80%; /* Set the width of the box */
-    height: auto; /* Set the height of the box to auto to fit the content */
+    width: 1200px;
+    height: auto;
+    align-items: top;
     margin-left: 220px;
-    margin-top: 40px;
+    margin-top: 10px;
     min-height: 90vh;
-    /* align-self: center; */
+    align-self: center;
     border-radius: 30px;
 
 }
+
+.container{
+  padding-left: 20px;
+}
+
+.title{
+  width:100px;
+  height:200px;
+  display: flex;
+  transition: all 0.5s ease;
+  top: 12px;
+  margin-left:590px;
+  padding-bottom:0px;
+}
+
+
+.title1{
+  font-size:35px;
+  color:#36e4f4;
+
+  margin-left:0px;
+  margin-top:25px;
+  margin-bottom:0px;
+
+}
+
+.content{
+  font-size:15px;
+  color:#d3d6e6;
+  margin-left:10px;
+  margin-bottom:0px;
+
+}
+
+
+.bot{
+  margin-left:800px;
+  margin-bottom:0px;
+
+}
+.title-header2{
+  font-size:35px;
+  color:#d3d6e6;
+  padding: 0px 10px 0px 10px;
+  margin-left:0px;
+  margin-top:25px;
+  margin-bottom:0px;
+  padding-left: 30;
+
+}
+
+
+.title-header{
+
+  font-size:30px;
+  color:azure;
+  padding: 0px 10px 0px 10px;
+  margin-left:300px;
+  margin-top:30px;
+
+}
+
+
+.fas.fa-map-marked-alt {
+  font-size: 1rem; /* change the value as needed */
+  width: 10px;
+  height: 10px;
+  top:10%;
+  left:0%;
+}
+
 
