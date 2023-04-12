@@ -114,15 +114,18 @@ class MeltcurveInterpreter:
         path = input("Enter the path to save: ")
         return path
 
-    def data_read(self, path, labels=False, index=False, figure=False):
+    def data_read(self, data, path, labels=False, index=False, figure=False):
         self.path = path
-        try:
+        if path is not None:
             try:
-                return_data = pd.read_excel(path, engine='xlrd')
+                try:
+                    return_data = pd.read_excel(path, engine='xlrd')
+                except:
+                    return_data = pd.read_excel(path)
             except:
-                return_data = pd.read_excel(path)
-        except:
-            raise ValueError("Unsupported Format!")
+                raise ValueError("Unsupported Format!")
+        else:
+            return_data = data
 
         if index:
             return_data.drop(return_data.columns[0], axis =1, inplace= True)
@@ -459,7 +462,7 @@ class MeltcurveInterpreter:
         pdf.cell(w=30, h=5, txt="Date: ", ln=0)
         pdf.cell(w=30, h=5, txt=str(datetime.now().strftime("%d/%m/%Y")), ln=1)
         pdf.cell(w=30, h=5, txt="File: ", ln=0)
-        pdf.cell(w=30, h=5, txt=str(self.path.split('\\')[-1]), ln=1)
+        # pdf.cell(w=30, h=5, txt=str(self.path.split('\\')[-1]), ln=1)
         pdf.ln(5)
         pdf.set_font('Arial', '', 14)
         pdf.cell(w=0, h=15, txt="Melt signal Plot", ln=1)
