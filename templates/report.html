@@ -4,27 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/meltstyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/report.css')}}">
     <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
     <title>Meltcurve Interpreter</title>
 
 </head>
 <body>
-<form action="{{url_for('CT')}}" method="POST" enctype="multipart/form-data"><span class="title-header">CT Analysis    </span>
-<input type="text" class="user-input" placeholder="Your Username" name ="input-text1" id="input-text" required>
-<input type="text" class="token-input" placeholder="Your Token" name ="input-text1" id="input-text" required>
-<button type="submit" class="Load">Load</button>
-</form>
-<div class="box">
 
-    <div id="myPlot"></div>
-    <script>
-    var plotDiv = {{plot_html|safe }}
-    </script>
-</div>
+    {% with success_message = get_flashed_messages()[0]%}
+    {% if success_message %}
+      <script>
+        alert('{{ success_message }}');
+      </script>
+    {% endif %}
+    {% endwith %}
+    <div class="box">
+        <div class="container">
+    
+            <div class="top">
+    
+                <header>Generate Report</header>
+            </div>
+            <form action="{{url_for('genreport')}}" method="POST" enctype="multipart/form-data">
+                <div class="input-field">
+                <input type="text" class="user-input" placeholder="Your Username" name ="input-text4" id="input-text" required>
+                    <br>
+                    <br>
+                <input type="text" class="token-input" placeholder="Your Token" name ="input-text4" id="input-text" required>
+                </div>
+                <br>
+                <div class="input-field">
+                    <button type="submit" class="submit">Submit</button>
+                </div>
+            </form>
+            <br>
+            <br>
+            <div class="about">
+                <span>{{ status }}</span>
+            </div>
+        </div>
 
-<nav>
+    </div>
+    <nav>
         <ul>
             <li>
                 <a href="#" class="logo">
@@ -76,5 +98,9 @@
     </nav>
 
 
+
+
+
+    
 </body>
 </html>

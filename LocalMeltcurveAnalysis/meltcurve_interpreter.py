@@ -341,8 +341,8 @@ class MeltcurveInterpreter:
         if return_values:
             return features_data
 
-    def report(self):
-        dataa = self.signal_processing_data.copy()
+    def report(self, dataa, file_name):
+        # dataa = self.signal_processing_data.copy()
         for cols in dataa.columns[:-1]:
             dataa[cols] = dataa[cols].apply(lambda x: round(x, 2))
 
@@ -497,6 +497,6 @@ class MeltcurveInterpreter:
             pdf.cell(15, 8, str(row['Width2']), 1)
             pdf.cell(15, 8, str(row['AUC2']), 1)
             pdf.cell(15, 8, str(row['Target']), 1)
-        saving_path2 = self.save_path()
+        saving_path2 = os.path.join(os.path.expanduser("~"), 'Downloads',f'{file_name}.pdf')
         pdf.output(saving_path2, 'F')
         os.remove(temp_image_file)

@@ -100,37 +100,18 @@ nav:hover{
     backdrop-filter: blur(80px);
     border: 1px solid rgba(255, 255, 255, 0.4);
     /* position:relative; */
-    width: 1250px;
-    height: 400px;
-    justify-content: top;
-    align-items:stretch;
-    margin-left: 200px;
-    margin-top: 16px;
+    width: 1200px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 220px;
+    margin-top: 50px;
     min-height: 90vh;
     /* align-self: center; */
-    border-radius: 20px;
-    overflow:scroll;
+    border-radius: 30px;
 
 }
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin:auto;
-  color:rgb(255, 255, 255);
-  font-size:medium;
-}
 
-.table thead th {
-  background-color: #003fd2;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-  padding: 8px;
-}
-
-.table tbody td {
-  border-bottom: 1px solid #ddd;
-  padding: 8px;
-}
 .container{
     width: 400px;
     display: flex;
@@ -148,31 +129,17 @@ header{
 }
 
 .user-input{
-    height: 40px;
-    width: 15%;
+    height: 45px;
+    width: 100%;
     border: none;
     outline:none;
     border-radius: 30px;
     color:azure;
     padding: 0 10px 0px 10px;
-    margin-left:250px;
-    margin-top:10px;
-    background: rgba(255, 255, 255, 0.4);
-}
-.token-input{
-    height: 40px;
-    width: 10%;
-    border: none;
-    outline:none;
-    border-radius: 30px;
-    color:azure;
-    padding: 0 10px 0px 10px;
-    margin-left:10px;
-    margin-top:10px;
     background: rgba(255, 255, 255, 0.4);
 }
 
-.input-field{
+.user-input-field{
     display: flex;
     flex-direction: column;
 }
@@ -180,34 +147,36 @@ header{
     color:azure;
 
 }
-.Load{
+.token-input{
+    height: 45px;
+    width: 100%;
     border: none;
+    outline:none;
     border-radius: 30px;
-    font-size: 15px;
-    height: 40px;
-    outline: none;
-    width: 10%;
-    cursor: pointer;
-    transition: .3s;
-    margin-left:10px;
-}
-.Load:hover{
-    background: rgb(0, 255, 255);
     color:azure;
+    padding: 0 10px 0px 10px;
+    background: rgba(255, 255, 255, 0.4);
 }
 
-.Report{
+.token-input-field{
+    display: flex;
+    flex-direction: column;
+}
+::-webkit-input-placeholder{
+    color:azure;
+
+}
+.submit{
     border: none;
     border-radius: 30px;
     font-size: 15px;
-    height: 40px;
+    height: 30px;
     outline: none;
-    width: 10%;
+    width: 100%;
     cursor: pointer;
     transition: .3s;
-    margin-left:10px;
 }
-.Report:hover{
+.submit:hover{
     background: rgb(0, 255, 255);
     color:azure;
 }
@@ -335,17 +304,4 @@ header{
     color:azure;
     text-align: center;
     font-size: 10px;
-}
-.myPlot{
-    border-radius:30px;
-}
-
-.title-header{
-
-    font-size:30px;
-    color:azure;
-    padding: 0px 10px 0px 10px;
-    margin-left:220px;
-    margin-top:10px;
-
 }
