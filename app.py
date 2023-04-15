@@ -13,6 +13,10 @@ import threading
 from queue import Queue
 import psycopg2
 from sqlalchemy import create_engine
+from ydata_profiling import ProfileReport
+import ydata_profiling.config as config
+config.Html.navbar_show:bool = True
+
 
 hostname = '192.168.0.146'
 meltdatabase = 'MeltFiles'
@@ -54,14 +58,10 @@ def type_definer(text:str):
     else:
         return 'FLOAT(50)'
 
-UPLOAD_FOLDER1 = 'static/uploaded_files/Melt'
-UPLOAD_FOLDER2 = 'static/uploaded_files/CT'
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
 app = Flask(__name__, template_folder=abspathgen('templates'))
 
-app.config["UPLOAD_FOLDER1"] = UPLOAD_FOLDER1
-app.config["UPLOAD_FOLDER2"] = UPLOAD_FOLDER2
 app.secret_key = '123'
 
 
@@ -172,8 +172,6 @@ def Ct_file_upload():
             data.to_sql(str(table_name), engine, if_exists='replace')
             cur.close()
 
-            # filepath = os.path.join(app.config["UPLOAD_FOLDER2"], username + ' ' + gen_token_path).replace('/', '\\')
-            # data.to_excel(filepath)
             del file
             # return render_template("index.html", success_message='File Uplaoded Successfully!')
             flash(f'File Uplaoded Successfully! Your Token : {gen_token}')
@@ -216,7 +214,7 @@ def CT():
         token = request.form.getlist("input-text1")[1]
         table_name = str(username) + str(token)
         query = "SELECT * FROM "+table_name
-        sqldata= pd.read_sql(query,melt_conn)
+        sqldata= pd.read_sql(query,ct_conn)
         data = obj.data_read(data = sqldata,path=None, index=True)
         fig = obj.plot(data=data, save=True)
         plot_html = plot(fig, output_type='div')
@@ -239,9 +237,7 @@ def homepage():
 
 
 def run_meltcurve_interpreter(table_name, queue):
-    """
-    Runs the MeltcurveInterpreter in a separate thread and puts the result in the queue.
-    """
+
     with app.app_context():
         obj2 = mlt.MeltcurveInterpreter()
         query = "SELECT * FROM " + table_name
@@ -253,9 +249,7 @@ def run_meltcurve_interpreter(table_name, queue):
 
 
 def reportgen(table_name2,queue):
-    """
-    Runs the MeltcurveInterpreter in a separate thread and puts the result in the queue.
-    """
+
     with app.app_context():
         obj2 = mlt.MeltcurveInterpreter()
         query = "SELECT * FROM " + table_name2
@@ -264,7 +258,17 @@ def reportgen(table_name2,queue):
         dataframe = obj2.feature_detection(return_values=True)
         obj2.report(dataa=dataframe, file_name=table_name2)
         queue.put(None)
+def stats(table_name3,queue):
 
+    with app.app_context():
+        obj2 = mlt.MeltcurveInterpreter()
+        query = "SELECT * FROM " + table_name3
+        sqldata = pd.read_sql(query, melt_conn)
+        data = obj2.data_read(data = sqldata,path=None, index=True)
+        dataframe = obj2.feature_detection(return_values=True)
+        report = ProfileReport(dataframe, title="Profiling Report")
+
+        queue.put(report)
 
 @app.route("/analytics.html", methods=['GET', 'POST'])
 def analytics():
@@ -309,5 +313,29 @@ def genreport():
 
     else:
         return render_template("report.html")
+
+@app.route("/statistics.html", methods=['GET','POST'])
+def stat():
+    if 'loaded' not in session:
+        session['loaded'] = True
+
+    if request.method == 'POST':
+        username3 = request.form.getlist("input-text5")[0]
+        token3 = request.form.getlist("input-text5")[1]
+
+        table_name3 = str(username3) + str(token3)
+
+        result_queue3 = Queue()
+        # Start the MeltcurveInterpreter in a separate thread
+        thread3 = threading.Thread(target=stats, args=(table_name3, result_queue3))
+        thread3.start()
+        thread3.join()
+        pf = result_queue3.get()
+        return render_template("statistics.html",profile_report=pf.to_html())
+
+    else:
+        return render_template("statistics.html")
+
+
 
 app.run(debug=True, threaded=True)

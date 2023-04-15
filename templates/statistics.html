@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/help.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'stylesheets/statistics.css')}}">
     <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
     <title>Meltcurve Interpreter</title>
 
 </head>
 <body>
-    <h1 class="title">Help and Support</h1>
-    <p class ="title-header">If you have any questions or issues, please email us at </p>
-
-    <a class ="title-header" href="mailto:project.2023.bu@gmail.com?subject=Help Request !">MLRS_DEV@support</a>
-
-    <p class ="title-header">We'll get back to you as soon as possible!</p>
-
-
+<form action="{{url_for('stat')}}" method="POST" enctype="multipart/form-data"><span class="title-header">Statistics     </span>
+<input type="text" class="user-input" placeholder="Your Username" name ="input-text5" id="input-text" required>
+<input type="text" class="token-input" placeholder="Your Token" name ="input-text5" id="input-text" required>
+<button type="submit" class="Load">Load</button>
+</form>
+<div class="box">
+            {{ profile_report|safe }}
+    </div>
 
 
 <nav>

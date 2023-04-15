@@ -89,7 +89,8 @@ class MeltcurveInterpreter:
                               legend_title_font_size=18,
                               legend_bgcolor="#f1f1f1",
                               legend_borderwidth=1,
-
+                              margin=dict(t=200),
+                              modebar=dict(orientation='v'),
                               plot_bgcolor='#ffffff',
                               title_font_color="#417a41",
                               )
