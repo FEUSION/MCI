@@ -116,15 +116,17 @@ nav:hover{
   width: 100%;
   border-collapse: collapse;
   margin:auto;
-  color:rgb(255, 255, 255);
+  color:black;  
   font-size:medium;
+  background-color: #fff;
 }
 
 .table thead th {
-  background-color: #003fd2;
+  background-color: #91c3f8;
   border-bottom: 1px solid #ddd;
   text-align: left;
   padding: 8px;
+  color: black;
 }
 
 .table tbody td {
