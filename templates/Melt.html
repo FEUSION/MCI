@@ -13,14 +13,15 @@
 <body>
 <form action="{{url_for('Melt')}}" method="POST" enctype="multipart/form-data"><span class="title-header">Melt Analysis</span>
 <input type="text" class="user-input" placeholder="Your Username" name ="input-text" id="input-text" required>
-<input type="text" class="token-input" placeholder="Your Token" name ="input-text" id="input-text" required>
-<button type="submit" class="Load">Load</button>
+<input type="text" class="token-input" placeholder="Your Token" name ="input-text" id="token-text" required>
+<button type="submit" class="Load" id="load-button" >Load</button>
 </form>
-<div class="box">
-
-    <div id="myPlot"></div>
+<div class="box" >
+    <div id="myPlot">
+        <img class="gif hidden" id="gif" src="../static/Images/im2.gif" alt="" />
+    </div>
     <script>
-    var plotDiv = {{plot_html|safe }}
+    var plotDiv = {{ plot_html|safe }}
     </script>
 </div>
 
@@ -75,6 +76,22 @@
         </ul>
     </nav>
 
-
+<script>
+    document.getElementById("load-button").addEventListener('click', loadFunction);
+    
+    function loadFunction(){ 
+        var username = document.getElementById("input-text").value;
+        var token = document.getElementById("token-text").value;
+        var box = document.getElementById("myPlot")
+        console.log(username.length)
+        if(username.length > 2 && token.length > 2){ 
+            document.getElementById('gif').style.display = "block";
+        }
+        
+        if(profile_report){
+            document.getElementById('gif').style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>

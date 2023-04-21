@@ -13,14 +13,26 @@ body{
     background-image: url('/static/Images/bg1.png');
     background-repeat: no-repeat;
 }
+/* .hidden{
+    display: none;
+} */
+#gif{
+    display: none;
+    position: absolute;
+    top: 300px;
+    left: 650px;
+    width:350px;
+    height:300px;
+
+}
 nav{
     position:fixed;
     top:0;
     bottom: 0;
     height: 100%;
     left: 0;
-    background: transparent
-    background-color:rgba(255, 255, 255, 0.4);
+    /* background: transparent */
+    /* background-color:rgba(255, 255, 255, 0.4); */
     /*backdrop-filter: blur(90px);*/
     width: 90px;
     overflow: hidden;
@@ -336,3 +348,7 @@ header{
 .profile{
     margin-left:250px;
 }
+
+
+
+

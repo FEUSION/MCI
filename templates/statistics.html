@@ -12,13 +12,16 @@
 </head>
 <body>
 <form action="{{url_for('stat')}}" method="POST" enctype="multipart/form-data"><span class="title-header">Statistics     </span>
-<input type="text" class="user-input" placeholder="Your Username" name ="input-text5" id="input-text" required>
-<input type="text" class="token-input" placeholder="Your Token" name ="input-text5" id="input-text" required>
-<button type="submit" class="Load">Load</button>
+<input type="text" class="user-input" placeholder="Your Username" name ="input-text5" id="input-text"  required>
+<input type="text" class="token-input" placeholder="Your Token" name ="input-text5" id="token-text" required>
+<button type="submit" class="Load" id="load-button">Load</button>
 </form>
-<div class="box">
-            {{ profile_report|safe }}
-    </div>
+<div class="box" id="box">
+    <img class="gif hidden" id="gif" src="../static/Images/im1.gif" alt="" />
+    {{ profile_report|safe }}
+    
+</div>
+
 
 
 <nav>
@@ -72,6 +75,21 @@
         </ul>
     </nav>
 
-
+<script>
+    document.getElementById("load-button").addEventListener('click', loadFunction);
+    
+    function loadFunction(){ 
+        var username = document.getElementById("input-text").value;
+        var token = document.getElementById("token-text").value;
+        var box = document.getElementById("box")
+        if(username.length > 2 && token.length > 2){ 
+            document.getElementById('gif').style.display = "block";
+        }
+        
+        if(profile_report){
+            document.getElementById('gif').style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>

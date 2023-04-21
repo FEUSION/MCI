@@ -18,7 +18,9 @@ import ydata_profiling.config as config
 config.Html.navbar_show:bool = True
 
 
-hostname = '192.168.0.146'
+
+# hostname = '172.16.253.147' #BU
+hostname = '192.168.0.146'  #mlrs
 meltdatabase = 'MeltFiles'
 username = 'postgres'
 pwd = 1100
@@ -265,7 +267,7 @@ def stats(table_name3,queue):
         query = "SELECT * FROM " + table_name3
         sqldata = pd.read_sql(query, melt_conn)
         data = obj2.data_read(data = sqldata,path=None, index=True)
-        dataframe = obj2.feature_detection(return_values=True)3
+        dataframe = obj2.feature_detection(return_values=True)
         report = ProfileReport(dataframe, title="Profiling Report", config_file=abspathgen('config.json'))
         queue.put(report)
 
