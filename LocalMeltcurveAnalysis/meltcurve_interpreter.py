@@ -40,15 +40,20 @@ pio.renderers.default = 'browser'
 class MeltcurveInterpreter:
 
     def __init__(self):
-        cwd = os.getcwd()
-        actuall_path = site.getsitepackages()[1]
-        if 'MeltcurveAnalysis' in cwd:
-            model_path = os.path.join(cwd,'Melt_2.0.h5')
-        else:
-            model_path = os.path.join(actuall_path,'MeltcurveAnalysis','Melt2_0.h5')
+        # cwd = os.getcwd()
+        # actuall_path = site.getsitepackages()[1]
+        # if 'MeltcurveAnalysis' in cwd:
+        #     model_path = os.path.join(cwd,'Melt_2.0.h5')
+        #     final_model=os.path.join(cwd,'MEP_Model_1.0.h5')
+        # else:
+        #     model_path = os.path.join(actuall_path,'MeltcurveAnalysis','Melt2_0.h5')
+        dir_path = os.path.dirname(os.path.abspath(__file__))
+        model_path = os.path.join(dir_path,'Melt2_0.h5')
+        final_model = os.path.join(dir_path,'MEP_Model_1.0.h5')
         self.labels = []
         self.transformed_data = pd.DataFrame()
         self.model = load_model(model_path, compile=False)
+        self.model1 = load_model(final_model, compile=False)
 
 
     def plot(self, data, save = False):
@@ -344,8 +349,28 @@ class MeltcurveInterpreter:
 
         if return_values:
             return features_data
+        
+
+    def classify(self, data):
+        model_data = data
+        df =model_data.iloc[:,0:-1].to_numpy()
+        df=df.astype(np.float32)
+        self.model_result = self.model1.predict(df)
+        
+
+
+
+
 
     def report(self, dataa, file_name):
+        mod_data = dataa
+        if mod_data[(mod_data['Tm1']>=76) & (mod_data['Tm1']<=78) ].any():
+            self.classify(mod_data)
+            arg = np.argmax(self.model_result,axis =1)
+        else:
+            neg_text="The given Sample is Negative"
+
+
         # dataa = self.signal_processing_data.copy()
         for cols in dataa.columns[:-1]:
             dataa[cols] = dataa[cols].apply(lambda x: round(x, 2))
@@ -456,26 +481,26 @@ class MeltcurveInterpreter:
 
         pdf = PDF()
         pdf.add_page()
-        pdf.set_font('Arial', 'B', 24)
+        pdf.set_font('Arial', '', 24)
         pdf.cell(w=0, h=15, txt="Melt Signal Processing", ln=1)
         pdf.ln(2)
-        pdf.set_font('Arial', '', 10)
+        pdf.set_font('Arial', 'B', 10)
         pdf.cell(w=30, h=5, txt="Date: ", ln=0)
         pdf.cell(w=30, h=5, txt=str(datetime.now().strftime("%d/%m/%Y")), ln=1)
         pdf.cell(w=30, h=5, txt="File: ", ln=0)
         # pdf.cell(w=30, h=5, txt=str(self.path.split('\\')[-1]), ln=1)
         pdf.ln(5)
-        pdf.set_font('Arial', '', 14)
+        pdf.set_font('Arial', 'B', 14)
         pdf.cell(w=0, h=15, txt="Melt signal Plot", ln=1)
         pdf.image(temp_image_file3, x=1, y=None, w=200, h=100, type='PNG')
-        pdf.set_font('Arial', '', 14)
+        pdf.set_font('Arial', 'B', 14)
         pdf.cell(w=0, h=15, txt="After Threshold", ln=1)
         pdf.image(temp_image_file2, x=1, y=None, w=200, h=100, type='PNG')
-        pdf.set_font('Arial', '', 14)
+        pdf.set_font('Arial', 'B', 14)
         pdf.cell(w=0, h=15, txt="Sample wise Melt signal Plots", ln=1)
         pdf.image(temp_image_file, x=1, y=None, w=200, h=150, type='PNG', link='')
         pdf.ln(3)
-        pdf.set_font('Arial', '', 14)
+        pdf.set_font('Arial', 'B', 14)
         pdf.cell(w=0, h=15, txt="Feature Table", ln=1)
         # Table contents
         for cols in dataa.columns:
@@ -501,6 +526,25 @@ class MeltcurveInterpreter:
             pdf.cell(15, 8, str(row['Width2']), 1)
             pdf.cell(15, 8, str(row['AUC2']), 1)
             pdf.cell(15, 8, str(row['Target']), 1)
+        pdf.ln(10)
+        pdf.set_font('Arial', 'B', 14)
+        pdf.set_text_color(0, 0, 0)
+        pdf.cell(w=0, h=15, txt="Interpretation Result", ln=1)
+        pdf.set_font('Arial', '', 12)
+        pdf.set_text_color(0, 0, 0)
+        for i in arg:
+            if i == 0:
+                result_text = "The sample that is provided, looks like NM - Neisseria Meningitidis Positive"
+                pdf.cell(w=0, h=15, txt=result_text, ln=2)
+            elif i == 1:
+                result_text = "The sample that is provided, looks like SP - Streptococcus Pneumoniae Positive"
+                pdf.cell(w=0, h=15, txt=result_text, ln=2)
+            elif i == 2:
+                result_text = "The sample that is provided, looks like HI - Haemophilus Influenzae Positive"
+                pdf.cell(w=0, h=15, txt=result_text, ln=2)
+            else:
+                pdf.cell(w=0, h=15, txt=neg_text, ln=2)
+            
         saving_path2 = os.path.join(os.path.expanduser("~"), 'Downloads',f'{file_name}.pdf')
         pdf.output(saving_path2, 'F')
         os.remove(temp_image_file)

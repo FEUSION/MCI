@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
+import tensorflow
+import keras
+from keras.models import load_model
 import pandas as pd
+import numpy as np
 import io
 import xlrd
 import xlwt
 import openpyxl
 import os
 import secrets
-import plotly.graph_objs as go
 from plotly.offline import plot
 import LocalMeltcurveAnalysis.meltcurve_interpreter as mlt
 import threading
@@ -19,7 +22,8 @@ config.Html.navbar_show:bool = True
 
 
 
-# hostname = '172.16.253.147' #BU
+
+# hostname = '172.16.243.65' #BU
 hostname = '192.168.0.146'  #mlrs
 meltdatabase = 'MeltFiles'
 username = 'postgres'
@@ -42,6 +46,10 @@ ct_conn = psycopg2.connect(
     password=pwd,
     port=portid
 )
+
+path = os.path.join(r'C:\Users\vicky\Desktop\MCI\LocalMeltcurveAnalysis\MEP_Model_1.0.h5')
+final_model = load_model(path)
+
 obj = mlt.MeltcurveInterpreter()
 
 
@@ -202,7 +210,7 @@ def Melt():
         data = obj.data_read(data = sqldata, path=None, index=True)
         fig = obj.plot(data=data, save=True)
         plot_html = plot(fig, output_type='div')
-
+ 
         return render_template("Melt.html", plot_html=plot_html)
     else:
         return render_template("Melt.html")
@@ -250,6 +258,8 @@ def run_meltcurve_interpreter(table_name, queue):
         queue.put(table)
 
 
+
+
 def reportgen(table_name2,queue):
 
     with app.app_context():
@@ -260,6 +270,9 @@ def reportgen(table_name2,queue):
         dataframe = obj2.feature_detection(return_values=True)
         obj2.report(dataa=dataframe, file_name=table_name2)
         queue.put(None)
+
+
+
 def stats(table_name3,queue):
 
     with app.app_context():
@@ -270,6 +283,10 @@ def stats(table_name3,queue):
         dataframe = obj2.feature_detection(return_values=True)
         report = ProfileReport(dataframe, title="Profiling Report", config_file=abspathgen('config.json'))
         queue.put(report)
+
+
+
+
 
 @app.route("/analytics.html", methods=['GET', 'POST'])
 def analytics():
