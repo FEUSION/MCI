@@ -364,11 +364,8 @@ class MeltcurveInterpreter:
 
     def report(self, dataa, file_name):
         mod_data = dataa
-        if mod_data[(mod_data['Tm1']>=76) & (mod_data['Tm1']<=78) ].any():
-            self.classify(mod_data)
-            arg = np.argmax(self.model_result,axis =1)
-        else:
-            neg_text="The given Sample is Negative"
+        self.classify(mod_data)
+        arg = np.argmax(self.model_result,axis =1)
 
 
         # dataa = self.signal_processing_data.copy()
@@ -543,7 +540,8 @@ class MeltcurveInterpreter:
                 result_text = "The sample that is provided, looks like HI - Haemophilus Influenzae Positive"
                 pdf.cell(w=0, h=15, txt=result_text, ln=2)
             else:
-                pdf.cell(w=0, h=15, txt=neg_text, ln=2)
+                result_text = "The sample that is Negative"
+                pdf.cell(w=0, h=15, txt=result_text, ln=2)
             
         saving_path2 = os.path.join(os.path.expanduser("~"), 'Downloads',f'{file_name}.pdf')
         pdf.output(saving_path2, 'F')
